@@ -1,0 +1,1209 @@
+{% extends 'sobriety/base_sobriety.html' %}
+{% block title %}Sobriety Network{% endblock %}
+{% block body %}
+<br>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<meta charset="utf-8">
+<meta content="stuff, to, help, search, engines, not" name="keywords">
+<meta content="What this page is about." name="description">
+<style>
+
+html, body{
+  background: linear-gradient(0deg, rgba(0, 0, 102,0.4), rgba(0, 0, 102,0.4), rgba(0, 0, 102,0.6)), url("/static/sobriety/images/homebg.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+img {
+  border-radius: 50%;
+}
+
+.items {
+   width:320px; height:auto; max-height:180px; box-shadow:0 0 30px rgba(0,0,0, 0.8); padding:8px;
+}
+
+.caption {
+    color:yellow; font-size:18px; font-weight:300; font-family:verdana; text-align:left; margin-bottom:20px;
+}
+
+#myBtn {
+  display: none;
+  position: fixed;
+  bottom: 80px;
+  right: 10px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+#myBtn:hover {
+  background-color: blue;
+}
+#admin{
+    display:none;
+}
+
+#edit {
+  border-radius: 5px;
+  max-width:550px;
+  width:auto;
+  margin:auto;
+  background-image: url("/static/sobriety/images/pattern.jpg");
+  background-size:cover;
+  overflow: hidden;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+}
+#edit:hover {
+  background-image: url("/static/sobriety/images/pattern4.jpg");
+  background-size:cover;
+}
+
+.pan {
+  max-width:500px;
+  width:auto;
+  height:auto;
+  margin-bottom: auto;
+  margin-right:0;
+  margin-left:auto;
+  opacity:0.9;
+  overflow: hidden;
+}
+
+p span {
+  color: #F00;
+}
+
+p {
+  margin: 0px;
+  font-weight: 200;
+  line-height: 2;
+  color:#fff;
+  font-size:20px;
+}
+
+input {
+  border-radius: 0px 5px 5px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 10px;
+  width:88%;
+  height: 42px;
+  float: left;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+  text-align:left;
+  font-weight:800;
+}
+
+a {
+  text-decoration:inherit
+}
+
+textarea {
+  border-radius: 5px 5px 5px 5px;
+  border: 1px solid #EEE;
+  width: 100%;
+  height: 60px;
+  float: left;
+  padding: 10px 15px;
+  opacity: 0.8;
+  color:blue;
+  text-align:left;
+}
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+.icon-case {
+  width: 12%;
+  float: left;
+  border-radius: 5px 0px 0px 5px;
+  background:#2e5cb8;
+  height:42px;
+  position: relative;
+  text-align: center;
+  line-height:40px;
+  padding-top:11px;
+  font-size:22px;
+}
+
+i {
+  color:yellow;
+}
+
+.bouton-update{
+  background-color:#002266;
+  color: #FFF;
+  text-align: center;
+  width: 100%;
+  border:0;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 18px;
+  height:42px;
+}
+
+<!--::-webkit-scrollbar {-->
+    <!--width: 0px;  /* remove scrollbar space */-->
+    <!--background: transparent;  /* optional: just make scrollbar invisible */-->
+<!--}-->
+<!--/* optional: show position indicator in red */-->
+<!--::-webkit-scrollbar-thumb {-->
+    <!--background: #FF0000;-->
+<!--}-->
+
+.slideshow {
+  position: relative;
+  width:320px;
+  height:200px;
+}
+
+.slideshow > div {
+  position: absolute;
+}
+
+#viewFrame {
+    position: absolute;
+    transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+}
+
+.slide-in {
+    animation: slide-in 0.5s forwards;
+    -webkit-animation: slide-in 0.5s forwards;
+}
+
+.slide-out {
+    animation: slide-out 0.5s forwards;
+    -webkit-animation: slide-out 0.5s forwards;
+}
+
+@keyframes slide-in {
+    100% { transform: translateX(0%); }
+}
+
+@-webkit-keyframes slide-in {
+    100% { -webkit-transform: translateX(0%); }
+}
+
+@keyframes slide-out {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-100%); }
+}
+
+@-webkit-keyframes slide-out {
+    0% { -webkit-transform: translateX(0%); }
+    100% { -webkit-transform: translateX(-100%); }
+}
+
+#optionsFrame.fadein {
+    transition-property: visibility, opacity;
+    transition-duration: 2s, 2s;
+}
+
+#optionsFrame.fadeoff {
+    opacity: 0;
+    visibility: hidden;
+    transition-property: opacity, visibility;
+    transition-duration: 1s, 0s;
+    transition-delay: 0s, 1s;
+}
+
+#snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #fff;
+    color: red;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 400px;
+    font-size: 17px;
+    box-shadow: 0px 0px 100px rgba(0, 0, 0, 1.0);
+}
+
+#snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 400px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 400px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 400px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 400px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+#priceBox {
+    position: absolute;
+    transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+}
+
+.slide-rin {
+    animation: slide-rin 0.5s forwards;
+    -webkit-animation: slide-rin 0.5s forwards;
+}
+
+.slide-rout {
+    animation: slide-rout 0.5s forwards;
+    -webkit-animation: slide-rout 0.5s forwards;
+}
+
+@keyframes slide-rin {
+    100% { transform: translateX(0%); }
+}
+
+@-webkit-keyframes slide-rin {
+    100% { -webkit-transform: translateX(0%); }
+}
+
+@keyframes slide-rout {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(100%); }
+}
+
+@-webkit-keyframes slide-rout {
+    0% { -webkit-transform: translateX(0%); }
+    100% { -webkit-transform: translateX(100%); }
+}
+
+#actionBox.fadein {
+    transition-property: visibility, opacity;
+    transition-duration: 2s, 2s;
+}
+
+#actionBox.fadeoff {
+    opacity: 0;
+    visibility: hidden;
+    transition-property: opacity, visibility;
+    transition-duration: 1s, 0s;
+    transition-delay: 0s, 1s;
+}
+
+.moduleItemImage {
+    display:block;
+    height:60px;
+    line-height:60px;
+    overflow:hidden;
+}
+
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+/* optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+
+#storyBox::-webkit-scrollbar-track
+   {
+	   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.0);
+	   background: transparent;
+   }
+
+#storyBox::-webkit-scrollbar
+  {
+	  width: 5px;
+	  background: transparent;
+  }
+
+#storyBox::-webkit-scrollbar-thumb
+  {
+	  background: #9966ff;
+	  border-radius:10px;
+}
+
+</style>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div id="title" style="font-size:35px; font-weight:800; color: #F7D479; text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7); text-align:center;
+	position:fixed; left:50%; float:middle; transform:translate(-50%, -50%); width:450px; z-index:100; top:20px; display:none;">Sobriety Network</div>
+
+<div style="width:100%; height:auto;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-9" id="largeFrame">
+                <div style="width:100%; text-align:center; display:inline-block;">
+                    <div style="display:inline-block; text-align:center; margin-bottom:50px;">
+                        <img src="/static/sobriety/images/icon.png" style="float:left; width:90px; height:90px; border-radius:3%;">
+                        <div style="float:left; font-size:35px; font-weight:800; color: #F7D479; text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7); margin-left:15px;">
+                            <label style="font-size:25px;">THE SOBRIETY</label><br>NETWORK
+                        </div>
+                    </div><br>
+                    <div style="display:inline-block; width:95%; margin-bottom:40px;">
+                        <div style="color:white; font-size:20px; font-weight:300; font-family:verdana; text-align:left;">
+                            Connecting addicts and alcoholics anytime and everywhere that we may help each other stay clean and sober
+                        </div>
+                    </div>
+                    <div id="optionsFrame" class="container-fluid" style="display:block;">
+                        <div style="margin-bottom:20px; height:42px; padding-left:3%;">
+                            <div style="color:white; font-size:25px; font-weight:300; font-family:verdana; text-align:left;" id="featureText">
+                                FEATURES:
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom:50px;">
+                            <div class="col-sm-4">
+                                <div style="width:100%; text-align:center;">
+                                    <div style="text-align:center;">
+                                        <div style="display:inline-block;">
+                                            <label class="caption">
+                                                Anonymous Calling
+                                            </label><br>
+                                            <a href="javascript:void(0);" onclick="javascript:showViewFrame('anonymous');">
+                                                <div class="slideshow" id="a">
+                                                    <div>
+                                                        <img src="/static/sobriety/images/anonymous.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/anonymous2.png" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/anonymous3.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/anonymous4.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/anonymous5.jpeg" class="items">
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <script>
+                                                $("#a > div:gt(0)").hide();
+                                                setInterval(function() {
+                                                    $('#a > div:first')
+                                                    .fadeOut(1000)
+                                                    .next()
+                                                    .fadeIn(1000)
+                                                    .end()
+                                                    .appendTo('#a');
+                                                }, 2500);
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div style="width:100%; text-align:center;">
+                                    <div style="text-align:center;">
+                                        <div style="display:inline-block;">
+                                            <label class="caption">
+                                                Geo-Location Calling
+                                            </label><br>
+                                            <a href="javascript:void(0);" onclick="javascript:showViewFrame('geocall');">
+                                                <div class="slideshow" id="b">
+                                                    <div>
+                                                        <img src="/static/sobriety/images/geocall.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/geocall2.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/geocall3.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/geocall4.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/geocall5.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/geocall6.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/geocall7.jpg" class="items">
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <script>
+                                                $("#b > div:gt(0)").hide();
+                                                setInterval(function() {
+                                                    $('#b > div:first')
+                                                    .fadeOut(1000)
+                                                    .next()
+                                                    .fadeIn(1000)
+                                                    .end()
+                                                    .appendTo('#b');
+                                                }, 2000);
+                                            </script>
+                                            <img src="/static/sobriety/images/geomarker.png" style="position:absolute; right:10%; top:50px; width:100px; height:130px; border-radius:0;" onclick="javascript:showViewFrame('geocall');">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div style="width:100%; text-align:center;">
+                                    <div style="text-align:center;">
+                                        <div style="display:inline-block;">
+                                            <label class="caption">
+                                                Groups
+                                            </label><br>
+                                            <a href="javascript:void(0);" onclick="javascript:showViewFrame('groups');">
+                                                <div class="slideshow" id="c">
+                                                    <div>
+                                                        <img src="/static/sobriety/images/groups.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/group2.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/group6.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/group3.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/group5.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/group4.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/group7.jpg" class="items">
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <script>
+                                                $("#c > div:gt(0)").hide();
+                                                setInterval(function() {
+                                                    $('#c > div:first')
+                                                    .fadeOut(1000)
+                                                    .next()
+                                                    .fadeIn(1000)
+                                                    .end()
+                                                    .appendTo('#c');
+                                                }, 2100);
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div style="width:100%; text-align:center;">
+                                    <div style="text-align:center;">
+                                        <div style="display:inline-block;">
+                                            <label class="caption">
+                                                Networks
+                                            </label><br>
+                                            <a href="javascript:void(0);" onclick="javascript:showViewFrame('networks');">
+                                                <div class="slideshow" id="d">
+                                                    <div>
+                                                        <img src="/static/sobriety/images/networks.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/network2.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/network3.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/network4.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/network5.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/network6.jpg" class="items">
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <script>
+                                                $("#d > div:gt(0)").hide();
+                                                setInterval(function() {
+                                                    $('#d > div:first')
+                                                    .fadeOut(1000)
+                                                    .next()
+                                                    .fadeIn(1000)
+                                                    .end()
+                                                    .appendTo('#d');
+                                                }, 2400);
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div style="width:100%; text-align:center;">
+                                    <div style="text-align:center;">
+                                        <div style="display:inline-block;">
+                                            <label class="caption">
+                                                Share Your Story
+                                            </label><br>
+                                            <a href="javascript:void(0);" onclick="javascript:showViewFrame('sharestory');">
+                                                <div class="slideshow" id="e">
+                                                    <div>
+                                                        <img src="/static/sobriety/images/sharestory.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/sharestory2.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/sharestory3.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/sharestory4.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/sharestory5.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/sharestory6.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/sharestory7.jpg" class="items">
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <script>
+                                                $("#e > div:gt(0)").hide();
+                                                setInterval(function() {
+                                                    $('#e > div:first')
+                                                    .fadeOut(1000)
+                                                    .next()
+                                                    .fadeIn(1000)
+                                                    .end()
+                                                    .appendTo('#e');
+                                                }, 2300);
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div style="width:100%; text-align:center;">
+                                    <div style="text-align:center;">
+                                        <div style="display:inline-block;">
+                                            <label class="caption">
+                                                View/Hear Stories
+                                            </label><br>
+                                            <a href="javascript:void(0);" onclick="javascript:showViewFrame('hearstory');">
+                                                <div class="slideshow" id="f">
+                                                    <div>
+                                                        <img src="/static/sobriety/images/hearstory.jpeg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/hearstory2.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/hearstory3.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/hearstory4.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/hearstory5.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/hearstory6.png" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/hearstory77.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/hearstory8.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/hearstory9.jpg" class="items">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/hearstory10.png" class="items">
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <script>
+                                                $("#f > div:gt(0)").hide();
+                                                setInterval(function() {
+                                                    $('#f > div:first')
+                                                    .fadeOut(1000)
+                                                    .next()
+                                                    .fadeIn(1000)
+                                                    .end()
+                                                    .appendTo('#f');
+                                                }, 1800);
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="viewFrame" style="display:none;">
+                        <div style="margin-bottom:20px; height:42px; padding-left:3%;">
+                            <a href="javascript:void(0);" onClick="javascript:showOptionsFrame();">
+                                <div style="color:white; font-size:25px; float:left;" id="backButton">
+                                    <span class="glyphicon glyphicon-menu-left"></span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div style="width:100%; text-align:center;">
+                                    <div style="text-align:center;">
+                                        <div style="display:inline-block;">
+                                            <label class="caption" id="caption">
+                                                Anonymous Calling
+                                            </label><br>
+                                            <a href="javascript:void(0);">
+                                                <div class="slideshow" id="aa">
+                                                    <div>
+                                                        <img src="/static/sobriety/images/anonymous.jpg" class="items" id="img1">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/anonymous2.png" class="items" id="img2">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/anonymous3.jpg" class="items" id="img3">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/anonymous4.jpg" class="items" id="img4">
+                                                    </div>
+                                                    <div>
+                                                        <img src="/static/sobriety/images/anonymous5.jpeg" class="items" id="img5">
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <script>
+                                                $("#aa > div:gt(0)").hide();
+                                                setInterval(function() {
+                                                    $('#aa > div:first')
+                                                    .fadeOut(1000)
+                                                    .next()
+                                                    .fadeIn(1000)
+                                                    .end()
+                                                    .appendTo('#aa');
+                                                }, 2500);
+                                            </script>
+                                            <img src="/static/sobriety/images/geomarker.png" id="mapmarker" style="position:absolute; right:10%; top:40px; width:100px; height:130px; display:none; border-radius:0px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div style="color:white; font-size:26px; padding:10px; text-align:left;" id="viewText">
+                                    Many of us have difficult discussing our feelings and challenges with people we know. Now you can call a random member and discuss your feelings. No numbers or name need to be seen (based on
+                                    preferences). Also, a great way to expand your sober network. If you connect on a random call you can exchange numbers and invite them to your sober network.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3" style="text-align:center; display:inline-block; margin-top:50px;">
+                <div id="actionBox">
+                    <div style="padding:20px; border-radius:10px; box-shadow:0 0 20px rgba(0,0,0, 0.5); display:inline-block; margin:50px 0px 50px 0px; min-width:320px; max-width:500px;">
+                        <label class="" style="color:yellow; font-size:18px; font-weight:300; font-family:verdana; text-align:left; margin-bottom:40px;">
+                            If you are a recovering alcoholic or addict and wish to join THE SOBRIETY NETWORK but do not have an invitation code, please submit your phone number here and we will send you an invitation code.
+                        </label><br>
+                        <div style="text-align:center; width:100%;">
+                            <div style="display:inline-block;">
+                                <div style="min-width:280px;">
+                			        <span class="icon-case"><i class="fa fa-phone"></i></span>
+                				    <input type="tel" name="phone" data-rule="required" required id="phone" placeholder="Phone Number"/>
+                                    <div class="validation"></div>
+                                </div>
+                                <button class="bouton-update" onclick="javascript:requestApp();">SUBMIT</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="donateBox" style="padding:24px; border-radius:10px; box-shadow:0 0 20px rgba(0,0,0, 0.5); display:inline-block; margin:20px 0px 100px 0px;
+                            min-width:320px; max-width:500px; background:url('/static/sobriety/images/networks.gif') no-repeat center center fixed; background-size:cover;">
+                        <label class="" style="color:yellow; font-size:18px; font-weight:300; font-family:verdana; text-align:left; margin-bottom:20px;">
+                            If you are interested in supporting this app, please donate here.
+                        </label>
+                        <div style="width:100%;">
+                            <center>
+                                <div style="width:280px;">
+                                    <button class="bouton-update" onclick="javascript:showPriceBox();"><span class="glyphicon glyphicon-usd" style="margin-right:8px;"></span>DONATE</button>
+                                </div>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="priceBox" style="display:none;">
+                    <div style="padding:20px; display:inline-block; margin:20px 0px 50px 0px; min-width:350px; max-width:500px;">
+                        <img src="/static/sobriety/images/rightarrow.png" style="width:25px; height:25px; float:right;"
+                            onclick="javascript:dismissPriceBox();">
+                        <div style="display:inline-block;">
+                            <fieldset style="border:1px solid transparent; border-radius:3px;">
+                                <div style="font-size:22px; font-weight:500; color: white; text-align:center; width:100%; font-family:verdana;">Select a price</div><br>
+                                <div>
+                                    <div style="width:100%;">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <div style="position:relative; display:inline-block; padding-top:8px; width:100%;">
+                                                <a href="javascript:void(0);">
+                                                    <div style="width:100%; text-align:left; padding-left:50px;" id="1" onclick="javascript:select(this);">
+                                                        <div style="color:white; font-size:20px; color:yellow;">donate $1</div>
+                                                        <img src="/static/sobriety/images/checkmarker.png" id="icon" style="width:35px; height:35px; position:absolute; right:0px; top:5px; display:block;">
+                                                    </div>
+                                                </a>
+                                            </div><br>
+                                            <div style="position:relative; display:inline-block; padding-top:8px; width:100%;">
+                                                <a href="javascript:void(0);">
+                                                    <div style="width:100%; text-align:left; padding-left:50px;" id="2" onclick="javascript:select(this);">
+                                                        <div style="color:white; font-size:20px; color:yellow;">donate $2</div>
+                                                        <img src="/static/sobriety/images/checkmarker.png" id="icon1" style="width:35px; height:35px; position:absolute; right:0px; top:5px; display:none;">
+                                                    </div>
+                                                </a>
+                                            </div><br>
+                                            <div style="position:relative; display:inline-block; padding-top:8px; width:100%;">
+                                                <a href="javascript:void(0);">
+                                                    <div style="width:100%; text-align:left; padding-left:50px;" id="3" onclick="javascript:select(this);">
+                                                        <div style="color:white; font-size:20px; color:yellow;">donate $3</div>
+                                                        <img src="/static/sobriety/images/checkmarker.png" id="icon2" style="width:35px; height:35px; position:absolute; right:0px; top:5px; display:none;">
+                                                    </div>
+                                                </a>
+                                            </div><br>
+                                            <div style="position:relative; display:inline-block; padding-top:8px; width:100%;">
+                                                <a href="javascript:void(0);">
+                                                    <div style="width:100%; text-align:left; padding-left:50px;" id="5" onclick="javascript:select(this);">
+                                                        <div style="color:white; font-size:20px; color:yellow;">donate $5</div>
+                                                        <img src="/static/sobriety/images/checkmarker.png" id="icon3" style="width:35px; height:35px; position:absolute; right:0px; top:5px; display:none;">
+                                                    </div>
+                                                </a>
+                                            </div><br>
+                                            <div style="position:relative; display:inline-block; padding-top:8px; width:100%;">
+                                                <a href="javascript:void(0);">
+                                                    <div style="width:100%; text-align:left; padding-left:50px;" id="10" onclick="javascript:select(this);">
+                                                        <div style="color:white; font-size:20px; color:yellow;">donate $10</div>
+                                                        <img src="/static/sobriety/images/checkmarker.png" id="icon4" style="width:35px; height:35px; position:absolute; right:0px; top:5px; display:none;">
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" required id="price" name="price" value="1">
+                                        <button type="submit" class="bouton-update" style="width:180px;" onclick="javascript:donate();">PAY NOW</button>
+                                        <!--<button type="submit" class="bouton-update" style="width:180px;">PAY NOW</button>-->
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="storyBox" style="display:none; height:90%; overflow:scroll;">
+                    {% if stories %}
+                        <div style="padding:5px; display:inline-block; margin:0px 0px 20px 0px; min-width:320px; max-width:500px; border-radius:10px; box-shadow:0 0 20px rgba(0,0,0, 0.5);">
+                            <div style="display:inline-block; text-align:center;">
+                                <label class="" style="color:yellow; font-size:25px; font-weight:600; font-family:verdana; text-align:left;">
+                                    STORIES
+                                </label><br>
+                                <div style="display:inline-block;">
+                                    <i class="fa fa-search" style="font-size:25px; float:left; color:white; margin-top:10px;"></i>
+                                    <input type="text" placeholder="Search..."
+                                        style="float:left; margin-left:10px; width:85%; color:white; background:transparent; border:0px; border-radius:5px;
+                                            font-size:20px; font-weight:500;" id="search" onkeyup="filter()">
+                                </div>
+                                <div style="margin-bottom:20px; margin-left:25px; width:100%; height:1px; background:white;"></div>
+                            </div>
+                            <div id="style" style="text-align:center; width:100%;">
+                                <ul id="list" class="contentform">
+                                    {% for story in stories %}
+                                    <li class="form-group">
+                                        <div style="display:inline-block; width:100%;">
+                                            <div style="width:100%;">
+                                                <div style="display:inline-block; float:left; width:30%; max-height:60px;">
+                                                    {% if story.thumbnail_url %}
+                                                        <a href="{{story.url}}" target="_blank" class="moduleItemImage">
+                                                            <img src="{{story.thumbnail_url}}" style="width:120px; height:auto; border-radius:0px;">
+                                                        </a>
+                                                    {% else %}
+                                                        <a href="javascript:void(0);" onclick="javascript:openAudio(this);">
+                                                            <img src="/static/sobriety/images/voiceicon.png" style="width:60px; height:auto; max-height:60px;">
+                                                            <input type="hidden" id="audioStoryTitle" value="{{story.title}}">
+                                                            <input type="hidden" id="audioStoryUrl" value="{{story.url}}">
+                                                        </a>
+                                                    {% endif %}
+                                                </div>
+                                                <div id="story_title" style="margin-left:25px;padding-left:10px; color: #fff; float:left; font-weight:600; font-size:18px; width:60%; text-overflow: ellipsis; text-align:left;">
+                                                    {{story.title}}<br>
+                                                </div>
+                                                <div id="member_name" style="margin-left:25px; padding-left:20px; padding-right:8px; color: #fff; float:left; font-weight:500; white-space: nowrap; overflow: hidden;
+                                                    font-size:14px; width:60%; text-overflow: ellipsis; text-align:left; display:inline-block;">
+                                                    {{story.member_name}}<br>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var list = document.getElementById("list");
+    var lis = list.querySelectorAll( "#style > ul > li" );
+    var stories = [];
+    var stories2 = [];
+    for(var i=0; i<lis.length; i++){
+       stories.push(lis[i]);
+       stories2.push(lis[i]);
+    }
+    function filter(){
+        var keyword = document.getElementById("search").value;
+        if(keyword.length > 0){
+            list.innerHTML = "";
+            for(var i=0; i<stories.length; i++){
+                var title = stories[i].querySelector("div[id='story_title']");
+                var name = stories[i].querySelector("div[id='member_name']");
+                if(title.innerHTML.toLowerCase().includes(keyword.toLowerCase())){
+                    list.appendChild(stories[i]);
+                }
+                else if(name.innerHTML.toLowerCase().includes(keyword.toLowerCase())){
+                    list.appendChild(stories[i]);
+                }
+                else {
+       //             list.appendChild(stories[i]);
+                }
+            }
+        }else{
+            list.innerHTML = "";
+            for(var i=0; i<stories2.length; i++){
+                list.appendChild(stories2[i]);
+            }
+        }
+    }
+</script>
+
+<div id="audioBox" style="font-size:16px; font-weight:300; color: black; box-shadow: 0px 0px 100px rgba(0, 0, 0, 1.0);
+	position:fixed; left:50%; float:middle; background-color:white; border-radius:30px; padding: 10px; text-align:center;
+	transform:translate(-50%, -50%); width:300px; z-index:200; top:400px; display:none;">
+    <img src="/static/sobriety/images/cancel.png" style="width:25px; height:25px; float:right;" onclick="javascript:document.getElementById('audioBox').style.display='none';">
+    <center>
+        <img src="/static/sobriety/images/voiceicon.png" style="width:50px; height:50px;"><br>
+        <label style="font-size:18px; font-weight:500; color:red;" id="audioTitle"></label>
+    	<audio controls id="audio" style="width:280px;">
+          <source src="" type="audio/ogg">
+          <source src="" type="audio/mpeg">
+        Your browser does not support the audio element.
+        </audio>
+    </center>
+</div>
+
+<div id="snackbar"></div>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+<button onclick="topFunction()" id="myBtn" title="Top"><span class="glyphicon glyphicon-menu-up"></span></button>
+
+
+<script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCCiec2y8kJAhXJKAtsCoitfJ7UwyXsG7E",
+    databaseURL: "https://sobriety-cf2c1.firebaseio.com",
+    projectId: "sobriety-cf2c1",
+    storageBucket: "sobriety-cf2c1.appspot.com"
+  };
+  firebase.initializeApp(config);
+</script>
+
+<script>
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+    if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+        document.getElementById("myBtn").style.display = "block";
+        document.getElementById("title").style.display = "block";
+    } else {
+        document.getElementById("myBtn").style.display = "none";
+        document.getElementById("title").style.display = "none";
+    }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+
+function showOptionsFrame(){
+    document.getElementById("viewFrame").setAttribute('class', 'slide-out');
+    // document.getElementById("optionsFrame").style.display = "block";
+    document.getElementById("optionsFrame").className = 'fadein';
+    document.getElementById("largeFrame").style.height = 'auto';
+    document.getElementById("actionBox").className = 'fadein';
+    document.getElementById("donateBox").className = 'fadein';
+    document.getElementById("priceBox").setAttribute('class', 'slide-rout');
+    document.getElementById("storyBox").className = 'fadeoff';
+    setTimeout(function() {
+        document.getElementById("storyBox").style.display = "none";
+    }, 300);
+    setTimeout(function() {
+        document.getElementById("viewFrame").style.display = "none";
+        document.getElementById("optionsFrame").style.height = 'auto';
+        document.getElementById("actionBox").style.height = 'auto';
+        document.getElementById("priceBox").style.display = "none";
+        document.getElementById("donateBox").style.display = "block";
+    }, 800);
+}
+
+function showViewFrame(option){
+    document.getElementById("viewFrame").style.display="block";
+    document.getElementById("viewFrame").setAttribute('class', 'slide-in');
+    document.getElementById("optionsFrame").className = 'fadeoff';
+    document.getElementById("optionsFrame").style.height = '0px';
+
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+
+    // alert(option);
+
+    if(option == 'anonymous'){
+        document.getElementById("img1").src = "/static/sobriety/images/anonymous.jpg";
+        document.getElementById("img2").src = "/static/sobriety/images/anonymous2.png";
+        document.getElementById("img3").src = "/static/sobriety/images/anonymous3.jpg";
+        document.getElementById("img4").src = "/static/sobriety/images/anonymous4.jpg";
+        document.getElementById("img5").src = "/static/sobriety/images/anonymous5.jpeg";
+        document.getElementById("mapmarker").style.display = "none";
+
+        document.getElementById("largeFrame").style.height = '1300px';
+
+        document.getElementById("caption").innerHTML = "Anonymous Calling";
+        document.getElementById("viewText").innerHTML = "Many of us have difficult discussing our feelings and challenges with people we know. Now you can call a random member and discuss your feelings. No numbers or name need to be seen (based on preferences). Also, a great way to expand your sober network. If you connect on a random call you can exchange numbers and invite them to your sober network.";
+    }else if(option == 'geocall'){
+        document.getElementById("img1").src = "/static/sobriety/images/geocall.jpg";
+        document.getElementById("img2").src = "/static/sobriety/images/geocall2.jpg";
+        document.getElementById("img3").src = "/static/sobriety/images/geocall3.jpg";
+        document.getElementById("img4").src = "/static/sobriety/images/geocall4.jpg";
+        document.getElementById("img5").src = "/static/sobriety/images/geocall5.jpg";
+        document.getElementById("mapmarker").style.display = "block";
+
+        document.getElementById("largeFrame").style.height = '1200px';
+
+        document.getElementById("caption").innerHTML = "Geo-Location Calling";
+        document.getElementById("viewText").innerHTML = "Traveling in an area with few meetings? Stuck in the airport for a layover? Use this feature to call the closest member of The Sobriety Network and meet for a cup of coffee or a bite to eat or ask them where there is a good meeting to attend. No names or numbers are visible (based on preferences)";
+    }else if(option == 'groups'){
+        document.getElementById("img1").src = "/static/sobriety/images/groups.jpg";
+        document.getElementById("img2").src = "/static/sobriety/images/group2.jpg";
+        document.getElementById("img3").src = "/static/sobriety/images/group6.jpg";
+        document.getElementById("img4").src = "/static/sobriety/images/group3.jpg";
+        document.getElementById("img5").src = "/static/sobriety/images/group5.jpg";
+        document.getElementById("mapmarker").style.display = "none";
+
+        document.getElementById("largeFrame").style.height = '1300px';
+
+        document.getElementById("caption").innerHTML = "Groups";
+        document.getElementById("viewText").innerHTML = "Set-up groups for meetings. You have a men’s number group…a women’s number group…and an all members group. When new comers request a list of numbers, simply give them the group code and they can join the group through the app, giving them access to all other members of the group. As the group administrator, you can manage the members within the group. No phone numbers shown.";
+    }else if(option == 'networks'){
+        document.getElementById("img1").src = "/static/sobriety/images/networks.jpg";
+        document.getElementById("img2").src = "/static/sobriety/images/network2.jpg";
+        document.getElementById("img3").src = "/static/sobriety/images/network3.jpg";
+        document.getElementById("img4").src = "/static/sobriety/images/network4.jpg";
+        document.getElementById("img5").src = "/static/sobriety/images/network5.jpg";
+        document.getElementById("mapmarker").style.display = "none";
+
+        document.getElementById("largeFrame").style.height = '900px';
+
+        document.getElementById("caption").innerHTML = "Networks";
+        document.getElementById("viewText").innerHTML = "Invite people to join your sober network where you will have the ability to see names and numbers. These are your sober family.";
+    }else if(option == 'sharestory'){
+        document.getElementById("img1").src = "/static/sobriety/images/sharestory.jpg";
+        document.getElementById("img2").src = "/static/sobriety/images/sharestory2.jpg";
+        document.getElementById("img3").src = "/static/sobriety/images/sharestory3.jpg";
+        document.getElementById("img4").src = "/static/sobriety/images/sharestory4.jpg";
+        document.getElementById("img5").src = "/static/sobriety/images/sharestory5.jpg";
+        document.getElementById("mapmarker").style.display = "none";
+
+        document.getElementById("largeFrame").style.height = '900px';
+
+        document.getElementById("caption").innerHTML = "Share Your Story";
+        document.getElementById("viewText").innerHTML = "Record your story in audio or video to share your experience, strength, and hope with THE SOBRIETY NETWORK community. Premium version required";
+    }else if(option == 'hearstory'){
+        document.getElementById("img1").src = "/static/sobriety/images/hearstory.jpeg";
+        document.getElementById("img2").src = "/static/sobriety/images/hearstory2.jpg";
+        document.getElementById("img3").src = "/static/sobriety/images/hearstory3.jpg";
+        document.getElementById("img4").src = "/static/sobriety/images/hearstory4.jpg";
+        document.getElementById("img5").src = "/static/sobriety/images/hearstory5.jpg";
+        document.getElementById("mapmarker").style.display = "none";
+
+        document.getElementById("actionBox").className = 'fadeoff';
+        document.getElementById("priceBox").setAttribute('class', 'slide-rout');
+        document.getElementById("storyBox").className = 'fadein';
+        setTimeout(function() {
+            document.getElementById("actionBox").style.height = '0px';
+            document.getElementById("priceBox").style.display = "none";
+            document.getElementById("storyBox").style.display = "block";
+        }, 500);
+
+        document.getElementById("largeFrame").style.height = '900px';
+
+        document.getElementById("caption").innerHTML = "View/Hear Stories";
+        document.getElementById("viewText").innerHTML = "Listen others share their experience, strength, and hope anytime you need a boost or to hear a message of hope.";
+    }
+}
+
+function requestApp(){
+    if(document.getElementById("phone").value == ''){
+        var x = document.getElementById("snackbar");
+        x.innerHTML = "Please enter your phone number."
+        x.className = "show";
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        return;
+    }
+    var isphone = telephoneCheck(document.getElementById("phone").value);
+    if(!isphone){
+        var x = document.getElementById("snackbar");
+        x.innerHTML = "Please enter a valid phone number."
+        x.className = "show";
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        document.getElementById("phone").value = "";
+        return;
+    }
+    firebase.database().ref('gmsg/user' + '7/' + document.getElementById("phone").value + document.getElementById("phone").value).remove();
+    firebase.database().ref('gmsg/user' + '7/' + document.getElementById("phone").value + document.getElementById("phone").value).push().set({
+      message: 'Hi, I am so interested in the Sobriety Network. Please invite me. My phone number: ' + document.getElementById("phone").value,
+      time: new Date().getTime(),
+      group_name:'New Requesters',
+      network_id:'0',
+      call_code:'',
+      sender_id:'0',
+      sender_name:'AppRequester',
+      sender_phone:document.getElementById("phone").value,
+      sender_photo:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnH4Yu8_WWhN8RVxzE-JAmGE2cy6MlB7fqOZBwiJj8DAAndpR4'
+    });
+
+    var x = document.getElementById("snackbar");
+    x.innerHTML = "Sent your request with the phone number!"
+    x.className = "show";
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    document.getElementById("phone").value = "";
+}
+
+function telephoneCheck(str) {
+  var isphone = /^(()?\d{3}())?(-|\s)?\d{3}(-|\s)?\d{4}$/.test(str);
+  return isphone;
+}
+
+function showPriceBox(){
+    document.getElementById("donateBox").className = 'fadeoff';
+    setTimeout(function(){
+        document.getElementById("donateBox").style.display = "none";
+        document.getElementById("priceBox").style.display = "block";
+        document.getElementById("priceBox").setAttribute('class', 'slide-rin');
+        document.body.scrollTop = 5000;
+        document.documentElement.scrollTop = 5000;
+    }, 30);
+}
+
+function dismissPriceBox(){
+    document.getElementById("priceBox").setAttribute('class', 'slide-rout');
+    document.getElementById("donateBox").className = 'fadein';
+    setTimeout(function() {
+        document.getElementById("donateBox").style.display = "block";
+        document.getElementById("priceBox").style.display="none";
+        document.body.scrollTop = 5000;
+        document.documentElement.scrollTop = 5000;
+    }, 400);
+}
+
+function select(obj){
+   document.getElementById("icon").style.display = "none";
+   document.getElementById("icon1").style.display = "none";
+   document.getElementById("icon2").style.display = "none";
+   document.getElementById("icon3").style.display = "none";
+   document.getElementById("icon4").style.display = "none";
+   obj.querySelector("img").style.display = "block";
+   document.getElementById("price").value = obj.id;
+}
+
+function donate(){
+    var price = document.getElementById("price").value;
+    var price = Number(price) * 100;
+    window.location.href = "/paybycard?price=" + String(price);
+}
+
+function openAudio(obj){
+    document.getElementById("audioBox").style.display = "block";
+    var title = obj.querySelector("input[id='audioStoryTitle']").value;
+    var url = obj.querySelector("input[id='audioStoryUrl']").value;
+    document.getElementById("audioTitle").innerHTML = title;
+    document.getElementById("audio").src = url;
+    document.getElementById("audio").play();
+}
+
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
